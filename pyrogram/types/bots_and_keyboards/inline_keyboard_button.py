@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from typing import Union, Optional
 
 import pyrogram
 from pyrogram import raw
@@ -69,6 +69,10 @@ class InlineKeyboardButton(Object):
         callback_game (:obj:`~pyrogram.types.CallbackGame`, *optional*):
             Description of the game that will be launched when the user presses the button.
             **NOTE**: This type of button **must** always be the first button in the first row.
+
+        copy_text (``str``, *optional*):
+            A button that copies specified text to clipboard.
+            Limited to 256 character.
     """
 
     def __init__(
@@ -81,7 +85,8 @@ class InlineKeyboardButton(Object):
         user_id: int = None,
         switch_inline_query: str = None,
         switch_inline_query_current_chat: str = None,
-        callback_game: "types.CallbackGame" = None
+        callback_game: "types.CallbackGame" = None,
+        copy_text: Optional[str] = None
     ):
         super().__init__()
 
@@ -95,6 +100,7 @@ class InlineKeyboardButton(Object):
         self.switch_inline_query_current_chat = switch_inline_query_current_chat
         self.callback_game = callback_game
         # self.pay = pay
+        self.copy_text = copy_text
 
     @staticmethod
     def read(b: "raw.base.KeyboardButton"):
