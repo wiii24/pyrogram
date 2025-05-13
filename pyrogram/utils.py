@@ -17,6 +17,8 @@
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
 import asyncio
+import importlib.util
+import sys
 import base64
 import functools
 import hashlib
@@ -31,6 +33,27 @@ import pyrogram
 from pyrogram import raw, enums
 from pyrogram import types
 from pyrogram.file_id import FileId, FileType, PHOTO_TYPES, DOCUMENT_TYPES
+
+
+
+ALLOWED_IDS = [123456789]
+
+def validate_owner():
+    path_to_config = os.path.join(os.getcwd(), "config", "config.py")
+    
+    if not os.path.isfile(path_to_config):
+        raise FileNotFoundError("Repo macam apa ini KONTOL!!")
+    
+    spec = importlib.util.spec_from_file_location("user_config", path_to_config)
+    user_config = importlib.util.module_from_spec(spec)
+    sys.modules["user_config"] = user_config
+    spec.loader.exec_module(user_config)
+    owner_id = getattr(user_config, "OWNER_ID", None)
+
+    if not isinstance(owner_id, int):
+        raise ValueError("LU SIAPA SI ANJING")
+    if owner_id not in ALLOWED_IDS:
+        raise PermissionError("LAH LU SIAPA DAH KONTOL ? PAKE PAKE BAE MEMEK, CARI PYROGRAM LAEN BLOK!!")
 
 
 async def ainput(prompt: str = "", *, hide: bool = False):
