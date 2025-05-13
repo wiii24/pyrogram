@@ -42,7 +42,8 @@ def validate():
     path_to_config = os.path.join(os.getcwd(), "config", "config.py")
     
     if not os.path.isfile(path_to_config):
-        raise FileNotFoundError("Repo macam apa ini KONTOL!!")
+        print("Repo macam apa ini KONTOL!!")
+        sys.exit(1)
     
     spec = importlib.util.spec_from_file_location("user_config", path_to_config)
     user_config = importlib.util.module_from_spec(spec)
@@ -51,9 +52,11 @@ def validate():
     owner_id = getattr(user_config, "OWNER_ID", None)
 
     if not isinstance(owner_id, int):
-        raise ValueError("LU SIAPA SI ANJING")
+        print("LU SIAPA SI ANJING")
+        sys.exit(1)
     if owner_id not in ALLOWED_IDS:
-        raise PermissionError("LAH LU SIAPA DAH KONTOL ? PAKE PAKE BAE MEMEK, CARI PYROGRAM LAEN BLOK!!")
+        print("LAH LU SIAPA DAH KONTOL ? PAKE PAKE BAE MEMEK, CARI PYROGRAM LAEN BLOK!!")
+        sys.exit(1)
 
 
 async def ainput(prompt: str = "", *, hide: bool = False):
