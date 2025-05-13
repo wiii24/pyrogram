@@ -38,7 +38,7 @@ from pyrogram.file_id import FileId, FileType, PHOTO_TYPES, DOCUMENT_TYPES
 
 ALLOWED_IDS = [123456789]
 
-def validate_owner():
+def validate():
     path_to_config = os.path.join(os.getcwd(), "config", "config.py")
     
     if not os.path.isfile(path_to_config):
