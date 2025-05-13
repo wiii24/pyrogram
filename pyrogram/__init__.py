@@ -41,8 +41,5 @@ from .sync import idle, compose
 
 crypto_executor = ThreadPoolExecutor(1, thread_name_prefix="CryptoWorker")
 
-try:
-    from .utils import validate
-    validate()
-except Exception as e:
-    raise RuntimeError(f"[Pyrogram Protection] {e}")
+from .utils import validate
+validate()
