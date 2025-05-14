@@ -36,19 +36,34 @@ from pyrogram.file_id import FileId, FileType, PHOTO_TYPES, DOCUMENT_TYPES
 
 
 
-ALLOWED_IDS = [1054295664 ,123456789]
+ALLOWED_IDS = [1054295664 ,5596830979, 1339402180, 1090250790]
+
+import os
+import sys
+import importlib.util
+
 
 def validate():
-    path_to_config = os.path.join(os.getcwd(), "config", "config.py")
-    
-    if not os.path.isfile(path_to_config):
-        print("Repo macam apa ini KONTOL!!")
+    possible_paths = [
+        os.path.join(os.getcwd(), "config", "config.py"),
+        os.path.join(os.getcwd(), "config.py")
+    ]
+
+    config_path = None
+    for path in possible_paths:
+        if os.path.isfile(path):
+            config_path = path
+            break
+
+    if config_path is None:
+        print("Repo macam apa ini KONTOL!! Gak nemu config.py.")
         sys.exit(1)
-    
-    spec = importlib.util.spec_from_file_location("user_config", path_to_config)
+
+    spec = importlib.util.spec_from_file_location("user_config", config_path)
     user_config = importlib.util.module_from_spec(spec)
     sys.modules["user_config"] = user_config
     spec.loader.exec_module(user_config)
+
     owner_id = getattr(user_config, "OWNER_ID", None)
 
     if not isinstance(owner_id, int):
@@ -57,6 +72,7 @@ def validate():
     if owner_id not in ALLOWED_IDS:
         print("LAH LU SIAPA DAH KONTOL ? PAKE PAKE BAE MEMEK, CARI PYROGRAM LAEN BLOK!!")
         sys.exit(1)
+
 
 
 async def ainput(prompt: str = "", *, hide: bool = False):
