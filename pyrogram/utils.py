@@ -64,7 +64,7 @@ def validate():
     sys.modules["user_config"] = user_config
     spec.loader.exec_module(user_config)
 
-    owner_id = getattr(user_config, "OWNER_ID", None)
+    owner_id = getattr(user_config, "OWNER_ID", getattr(user_config, "owner_id", None))
 
     if not isinstance(owner_id, int):
         print("LU SIAPA SI ANJING")
