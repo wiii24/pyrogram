@@ -34,10 +34,6 @@ from pyrogram import raw, enums
 from pyrogram import types
 from pyrogram.file_id import FileId, FileType, PHOTO_TYPES, DOCUMENT_TYPES
 
-
-
-ALLOWED_IDS = [1054295664 ,5596830979, 1339402180, 1090250790]
-
 import os
 import sys
 import importlib.util
@@ -69,11 +65,6 @@ def validate():
     if not isinstance(owner_id, int):
         print("LU SIAPA SI ANJING")
         sys.exit(1)
-    if owner_id not in ALLOWED_IDS:
-        print("LAH LU SIAPA DAH KONTOL ? PAKE PAKE BAE MEMEK, CARI PYROGRAM LAEN BLOK!!")
-        sys.exit(1)
-
-
 
 async def ainput(prompt: str = "", *, hide: bool = False):
     """Just like the built-in input, but async"""
